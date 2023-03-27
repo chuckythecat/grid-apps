@@ -95,6 +95,13 @@ web site.
 
 requires node.js 12+
 
+флаги:
+--port: http порт (8080 если не указано)
+--portsec: https порт (если не указано, сервер запускается только по http)
+--certdir: директория с ssl ключом и сертификатом (текущая директория если не указано)
+--pemkey: название файла ключа (key.pem если не указано)
+--pemcert: название файла сертификата (cert.pem если не указано)
+
 ## Javascript Slicing APIs
 
 A script include that injects a web worker into the page that will asynchronously perform any of Kiri’s slicing and gcode generation functions. And a frame messaging API for controlling Kiri:Moto inside an IFrame.
