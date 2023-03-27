@@ -2759,7 +2759,7 @@ gapp.register("kiri.init", [], (root, exports) => {
         if (!SETUP.s) console.log(`kiri | init main | ${kiri.version}`);
 
         // send init-done event
-        api.event.emit('init-done', stats);
+        api.event.emit('init-done', JSON.parse(JSON.stringify(stats)));
 
         // show gdpr if it's never been seen and we're not iframed
         if (!sdb.gdpr && WIN.self === WIN.top && !SETUP.debug && !api.const.LOCAL) {
