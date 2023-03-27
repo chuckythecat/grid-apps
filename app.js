@@ -471,6 +471,9 @@ function handleSetup(req, res, next) {
 }
 
 function handleVersion(req, res, next) {
+    res.setHeader("Cross-Origin-Opener-Policy", 'same-origin');
+    res.setHeader("Cross-Origin-Embedder-Policy", 'require-corp');
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     let vstr = oversion || dversion || version;
     if (["/kiri/","/mesh/","/meta/"].indexOf(req.app.path) >= 0 && req.url.indexOf(vstr) < 0) {
         if (req.url.indexOf("?") > 0) {
@@ -743,10 +746,9 @@ function addCorsHeaders(req, res) {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Headers', 'X-Moto-Ajax, Content-Type');
     res.setHeader('Access-Control-Allow-Origin', req.headers['origin'] || '*');
-    if (!crossOrigin) {
-        res.setHeader("Cross-Origin-Opener-Policy", 'same-origin');
-        res.setHeader("Cross-Origin-Embedder-Policy", 'require-corp');
-    }
+    res.setHeader("Cross-Origin-Opener-Policy", 'same-origin');
+    res.setHeader("Cross-Origin-Embedder-Policy", 'require-corp');
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     res.setHeader("Allow", "GET,POST,OPTIONS");
 }
 
@@ -799,7 +801,12 @@ function fixedmap(prefix, map) {
 
 // HTTP 307 redirect
 function redir(path, type) {
-    return (req, res, next) => http.redirect(res, path, type);
+    return (req, res, next) => {
+        res.setHeader("Cross-Origin-Opener-Policy", 'same-origin');
+        res.setHeader("Cross-Origin-Embedder-Policy", 'require-corp');
+        res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+        http.redirect(res, path, type);
+    }
 }
 
 // mangle request path
