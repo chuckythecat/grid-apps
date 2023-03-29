@@ -2766,15 +2766,13 @@ gapp.register("kiri.init", [], (root, exports) => {
             $('gdpr').style.display = 'flex';
         }
 
+        // do not
         // warn of degraded functionality when SharedArrayBuffers are missing
-        if (api.feature.work_alerts && !window.SharedArrayBuffer) {
-            api.alerts.show("The security context of this", 10);
-            api.alerts.show("window blocks important functionality", 10);
-            api.alerts.show("Check developer console for more information", 10);
-            console.log("iframe:")
-            console.log(`isSecureContext: ${isSecureContext}`);
-            console.log(`crossOriginIsolated: ${crossOriginIsolated}`);
-        }
+        // because we're using http (for now)
+        // if (api.feature.work_alerts && !window.SharedArrayBuffer) {
+        //     api.alerts.show("The security context of this", 10);
+        //     api.alerts.show("window blocks important functionality", 10);
+        // }
 
         // add keyboard focus handler (must use for iframes)
         WIN.addEventListener('load', function () {
