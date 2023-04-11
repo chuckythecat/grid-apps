@@ -6,7 +6,7 @@ gapp.register("kiri.lang", [], (root, exports) => {
 
 const { kiri } = root;
 const LANG = kiri.lang = { current: {} };
-const KDFL = 'en-us';
+const KDFL = 'ru-ru';
 
 let lset = navigator.language.toLocaleLowerCase();
 
@@ -24,6 +24,7 @@ LANG.map = function(key) {
         case 'pl': return 'pl-pl';
         case 'pt': return 'pt-pt';
         case 'zh': return 'zh';
+        case 'ru': return 'ru';
     }
     return KDFL;
 };

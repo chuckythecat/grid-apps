@@ -2312,6 +2312,10 @@ gapp.register("kiri.init", [], (root, exports) => {
             sdb.setItem('kiri-lang', 'zh');
             api.space.reload();
         };
+        $('lset-ru').onclick = function() {
+            sdb.setItem('kiri-lang', 'ru');
+            api.space.reload();
+        };
 
         space.event.addHandlers(self, [
             'keyup', keyUpHandler,
@@ -2766,13 +2770,24 @@ gapp.register("kiri.init", [], (root, exports) => {
             $('gdpr').style.display = 'flex';
         }
 
-        // do not
         // warn of degraded functionality when SharedArrayBuffers are missing
-        // because we're using http (for now)
-        // if (api.feature.work_alerts && !window.SharedArrayBuffer) {
-        //     api.alerts.show("The security context of this", 10);
-        //     api.alerts.show("window blocks important functionality", 10);
-        // }
+        if (api.feature.work_alerts && !window.SharedArrayBuffer) {
+            api.alerts.show("Некоторый функционал может быть недоступен", 10);
+            api.alerts.show("Откройте консоль разработчика чтобы узнать больше.", 10);
+            console.log("iframe:")
+            console.log(`isSecureContext: ${isSecureContext}`);
+            if(!isSecureContext) {
+                console.log("https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts");
+                console.log("TL;DR - use https")
+            }
+            console.log(`crossOriginIsolated: ${crossOriginIsolated}`);
+            if(!crossOriginIsolated) {
+                console.log("https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer#security_requirements");
+                console.log("TL;DR - following headers on server's response are missing:");
+                console.log("Cross-Origin-Opener-Policy: same-origin");
+                console.log("Cross-Origin-Embedder-Policy: require-corp");
+            }
+        }
 
         // add keyboard focus handler (must use for iframes)
         WIN.addEventListener('load', function () {

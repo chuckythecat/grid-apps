@@ -376,8 +376,20 @@ function preparePreview(callback, scale = 1, offset = 0) {
 
 function prepareAnimation() {
     if (!window.SharedArrayBuffer) {
-        api.alerts.show("The security context of this");
-        api.alerts.show("window prevents animations");
+        api.alerts.show("Невозможно запустить анимацию");
+        api.alerts.show("Откройте консоль разработчика чтобы узнать больше.");
+        console.log("iframe:")
+        if(!isSecureContext) {
+            console.log("https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts");
+            console.log("TL;DR - use https")
+        }
+        console.log(`crossOriginIsolated: ${crossOriginIsolated}`);
+        if(!crossOriginIsolated) {
+            console.log("https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer#security_requirements");
+            console.log("TL;DR - following headers on server's response are missing:");
+            console.log("Cross-Origin-Opener-Policy: same-origin");
+            console.log("Cross-Origin-Embedder-Policy: require-corp");
+        }
         return;
     }
     const settings = api.conf.get();
